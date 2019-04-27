@@ -101,13 +101,7 @@ def run_param(dis,con):
   dis.dropna(subset=parameters,inplace=True)
   con_gp=con.groupby(parameters).size().to_frame('Healthy Count').reset_index()
   dis_gp=dis.groupby(parameters).size().to_frame('Patient Count').reset_index()
-  print con_gp
-  print dis_gp
   data_pd=pd.merge(con_gp,dis_gp,on=parameters,how='outer').fillna(0)
-  print data_pd
-  #data_pd=pd.DataFrame()
-  #data_pd['Patient Count']=0
-  #data_pd['Healthy Count']=0
   dsum=data_pd['Patient Count'].sum()
   csum=data_pd['Healthy Count'].sum()
   data_pd['Remaining Patients']=dsum-data_pd['Patient Count']
@@ -122,6 +116,7 @@ def run_param(dis,con):
   return final_pd
 
 df_output=run_param(dis,con)
+df_output['Category']='Overall'
 #print df_out
 
 #### Gender wise analysis

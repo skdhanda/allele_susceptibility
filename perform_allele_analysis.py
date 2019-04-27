@@ -52,9 +52,9 @@ args = parser.parse_args()
 
 dis=pd.read_csv(args.pfile,sep="\t")
 con=pd.read_csv(args.cfile,sep="\t")
-#print con[con['Age']== ""]
-#print con['Age'].unique().tolist()
-#print con_younger,dis_younger
+
+
+
 def run_param(dis,con):
   parameters=['A_ag','B_ag','C_ag','DR_ag','DQ_ag']
   final_pd=pd.DataFrame()
@@ -98,7 +98,7 @@ def run_param(dis,con):
   return final_pd
 
 df_output=run_param(dis,con)
-
+df_output['Category']='Overall'
 #### Gender wise analysis
 dis['Sex'].replace(" ","",inplace=True,regex=True)
 con['Sex'].replace(" ","",inplace=True,regex=True)
