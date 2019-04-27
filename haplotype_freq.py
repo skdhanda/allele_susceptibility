@@ -115,32 +115,46 @@ def run_param(dis,con):
   #con.to_csv('control_mod.tsv',sep="\t")
   return final_pd
 
+
 df_output=run_param(dis,con)
 df_output['Category']='Overall'
-#print df_out
-
 #### Gender wise analysis
 dis['Sex'].replace(" ","",inplace=True,regex=True)
 con['Sex'].replace(" ","",inplace=True,regex=True)
-##print dis['Sex'].unique()
-##print con['Sex'].unique()
-#df_output=pd.DataFrame()
+print "Different genders present in patient data  ", dis['Sex'].unique()
+print "Different genders present in heathy individuals ", con['Sex'].unique()
+#df_gender=pd.DataFrame()
 print con['Age'].unique()
 print con['Age'].unique()
+
 for gender in ['M','F']:
   dis_gender=dis.loc[dis['Sex']==gender].copy()
   con_gender=con.loc[con['Sex']==gender].copy()
+  print("number of patients with gender", gender,len(dis_gender))
+  print("number of healthy individuals with gender", gender,len(con_gender))
   df_gen=run_param(dis_gender,con_gender)
   df_gen['Category']=gender
   df_output=df_output.append(df_gen,ignore_index=True,sort=True)
 dis_younger=dis.loc[dis['Age']<=18].copy()
 con_younger=con.loc[con['Age']<=18].copy()
+print("number of patients with age group of  <=18 years",len(dis_younger))
+print("number of healthy individual with age group of <=18years",len(con_younger))
+#print con_younger,dis_younger
 df_gen=run_param(dis_younger,con_younger)
 df_gen['Category']='Younger <=18 years'
 df_output=df_output.append(df_gen,ignore_index=True,sort=True)
 dis_adults=dis.loc[dis['Age']>18].copy()
 con_adults=con.loc[con['Age']>18].copy()
+print("number of patients with age group of  >18 years",len(dis_adults))
+print("number of healthy individual with age group of >18years",len(con_adults))
 df_gen=run_param(dis_adults,con_adults)
 df_gen['Category']='Adults >18 years'
 df_output=df_output.append(df_gen,ignore_index=True,sort=True)
 df_output.to_csv(args.ofile,index=False)
+
+
+
+
+
+
+
